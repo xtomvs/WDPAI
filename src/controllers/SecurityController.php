@@ -1,28 +1,15 @@
 <?php
 
 require_once 'AppController.php';
+require_once __DIR__.'/../repository/UserRepository.php';
 
 class SecurityController extends AppController {
 
-     private static array $users = [
-        [
-            'email' => 'anna@example.com',
-            'password' => '$2y$10$wz2g9JrHYcF8bLGBbDkEXuJQAnl4uO9RV6cWJKcf.6uAEkhFZpU0i', // test123
-            'first_name' => 'Anna'
-        ],
-        [
-            'email' => 'bartek@example.com',
-            'password' => '$2y$10$fK9rLobZK2C6rJq6B/9I6u6Udaez9CaRu7eC/0zT3pGq5piVDsElW', // haslo456
-            'first_name' => 'Bartek'
-        ],
-        [
-            'email' => 'celina@example.com',
-            'password' => '$2y$10$Cq1J6YMGzRKR6XzTb3fDF.6sC6CShm8kFgEv7jJdtyWkhC1GuazJa', // qwerty
-            'first_name' => 'Celina'
-        ],
-    ];
+    private $userRepository;
 
-
+    public function __construct() {
+        $this->userRepository = new UserRepository();
+    }
 
     public function login() {
 
@@ -37,13 +24,7 @@ class SecurityController extends AppController {
             return $this->render('login', ['messages' => 'Fill all fields']);
         }
 
-        $userRow = null;
-        foreach (self::$users as $u) {
-            if (strcasecmp($u['email'], $email) === 0) {
-                $userRow = $u;
-                break;
-            }
-        }
+        $userRow = $this->userRepository->getUserByEmail($email);
 
         if (!$userRow) {
             return $this->render('login', ['messages' => 'User not found']);
@@ -52,6 +33,8 @@ class SecurityController extends AppController {
         if (!password_verify($password, $userRow['password'])) {
             return $this->render('login', ['messages' => 'Wrong password']);
         }
+
+        //TODO create user session, cookie, token
 
 
         $url = "http://$_SERVER[HTTP_HOST]";
@@ -78,6 +61,14 @@ class SecurityController extends AppController {
             return $this->render('register', ['messages' => 'Passwords do not match']);
         }
 
-        return $this->render('register');
+        //TODO chceck if user with this email already exists
+
+        $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+
+        $this->userRepository->createUser(
+            $email, $hashedPassword, $firstName, $lastName
+        );
+
+        return $this->render('login', ['messages' => 'User registered successfully, please login!']);
     }
 }
