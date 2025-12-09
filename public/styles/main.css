@@ -50,6 +50,7 @@ body {
     grid-template-columns: 0.5fr 2.5fr;
     height: calc(100vh - 100px);
 }
+
  
  
 @media screen and (max-width: 480px) {

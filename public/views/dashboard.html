@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" type="text/css" href="public/styles/main.css">
+    <link rel="stylesheet" type="text/css" href="public/styles/dashboard.css">
     <script src="public/scripts/main.js" defer></script>
 </head>
 
@@ -29,7 +30,7 @@
         <main>
             <h1>CARDS</h1>
             <!-- TODO display list of cards -->
-             <ul>
+             <ul class="cards">
              <?php foreach($cards as $key=>$value): ?> 
              <li>
                 <?php echo $value['title']; ?>

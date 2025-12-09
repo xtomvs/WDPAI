@@ -4,8 +4,10 @@ require_once 'src/controllers/SecurityController.php';
 require_once 'src/controllers/DashboardController.php';
 
 // TODO Controllery 
-//singleton
+//singleton do repo/bazy danych
 //regex do pobrania id
+//zamiast switch case IN_ARRAY($path, Routing::$roles)
+//user session
 
 class Routing {
 
@@ -21,6 +23,10 @@ class Routing {
         "dashboard" => [
             "controller" => "DashboardController",
             "action" => "index"
+        ],
+        "search-cards" => [
+            "controller" => "DashboardController",
+            "action" => "search"
         ]
     ];
 
@@ -29,6 +35,7 @@ class Routing {
             case 'login':
             case 'register':
             case 'dashboard':
+            case 'search-cards':
                 $controller = Routing::$routes[$path]["controller"];
                 $action = Routing::$routes[$path]["action"];
                 $id = null;
