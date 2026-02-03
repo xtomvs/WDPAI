@@ -1,46 +1,347 @@
-<?php
-
-?>
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Studify – Panel Główny</title>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" type="text/css" href="public/styles/main.css">
-    <link rel="stylesheet" type="text/css" href="public/styles/dashboard.css">
-    <script src="public/scripts/main.js" defer></script>
-</head>
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
 
-<body>
-    <nav>
-        <p>LOGO</p>
-        <ul>
-            <li>HOME</li>
-            <li>USER</li>
-            <li>SETTINGS</li>
-        </ul>
-    </nav>
-    <div class="container">
-        <aside>
-            <p>PODRECZNE MENU</p>
-        </aside>
-        <main>
-            <h1>CARDS</h1>
-            <!-- TODO display list of cards -->
-             <ul class="cards">
-             <?php foreach($cards as $key=>$value): ?> 
-             <li>
-                <?php echo $value['title']; ?>
-            <img src="<?= $value['imageUrlPath']; ?>">
-            </li> 
-             <?php endforeach; ?> 
-             </ul>
-        </main>
+    <!-- Material Symbols -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="public/styles/dashboard.css?v=4" />
+  </head>
+
+  <body>
+    <div class="app">
+      <!-- SIDEBAR -->
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand__logo">
+            <span class="material-symbols-outlined brand__icon">task_alt</span>
+          </div>
+          <div class="brand__name">Studify</div>
+        </div>
+
+        <div class="sidebar__content">
+          <nav class="nav">
+            <a class="nav__item nav__item--active" href="/dashboard">
+              <span class="material-symbols-outlined">dashboard</span>
+              <span>Panel Główny</span>
+            </a>
+
+            <a class="nav__item" href="/tasks">
+              <span class="material-symbols-outlined">list_alt</span>
+              <span>Lista Zadań</span>
+            </a>
+
+            <a class="nav__item" href="/calendar">
+              <span class="material-symbols-outlined">calendar_month</span>
+              <span>Kalendarz</span>
+            </a>
+
+            <a class="nav__item" href="/habits">
+              <span class="material-symbols-outlined">repeat</span>
+              <span>Nawyki</span>
+            </a>
+          </nav>
+
+          <div class="sidebar__footer">
+            <a href="/settings" class="profile">
+              <div class="profile__avatar" aria-hidden="true"></div>
+              <div class="profile__meta">
+                <div class="profile__name">Jan Kowalski</div>
+                <div class="profile__email">j.kowalski@email.com</div>
+              </div>
+            </a>
+
+            <button class="logout" type="button" onclick="window.location.href='/logout'">
+              <span class="material-symbols-outlined">logout</span>
+              <span>Wyloguj</span>
+            </button>
+          </div>
+        </div>
+      </aside>
+
+      <!-- MAIN -->
+      <main class="main">
+        <!-- TOPBAR -->
+        <header class="topbar">
+          <div class="topbar__title">Panel Główny</div>
+
+          <div class="topbar__actions">
+            <label class="search" aria-label="Szukaj">
+              <span class="material-symbols-outlined">search</span>
+              <input type="text" placeholder="Szukaj..." />
+            </label>
+
+            <button class="icon-btn" type="button" aria-label="Powiadomienia">
+              <span class="material-symbols-outlined">notifications</span>
+              <span class="dot" aria-hidden="true"></span>
+            </button>
+          </div>
+        </header>
+
+        <!-- CONTENT -->
+        <div class="content">
+          <div class="container">
+            <section class="hero">
+              <div>
+                <h1 class="hero__title">Cześć, Jan! 👋</h1>
+                <p class="hero__subtitle">
+                  Masz dziś świetny dzień na naukę. Oto Twoje podsumowanie.
+                </p>
+              </div>
+            </section>
+
+            <!-- WEEK -->
+            <section class="section">
+              <div class="section__head">
+                <h2 class="section__kicker">Podgląd tygodnia</h2>
+                <div class="section__link section__link--primary">Październik 2024</div>
+              </div>
+
+              <div class="week">
+                <div class="day">
+                  <div class="day__dow">PON</div>
+                  <div class="day__date">21</div>
+                  <div class="bar"><span style="width: 100%"></span></div>
+                </div>
+
+                <div class="day">
+                  <div class="day__dow">WT</div>
+                  <div class="day__date">22</div>
+                  <div class="bar"><span style="width: 80%"></span></div>
+                </div>
+
+                <div class="day day--active">
+                  <div class="day__dow">ŚR</div>
+                  <div class="day__date">23</div>
+                  <div class="bar bar--on-dark"><span style="width: 60%"></span></div>
+                </div>
+
+                <div class="day day--muted">
+                  <div class="day__dow">CZW</div>
+                  <div class="day__date">24</div>
+                  <div class="bar"></div>
+                </div>
+
+                <div class="day day--muted">
+                  <div class="day__dow">PT</div>
+                  <div class="day__date">25</div>
+                  <div class="bar"></div>
+                </div>
+
+                <div class="day day--muted">
+                  <div class="day__dow">SOB</div>
+                  <div class="day__date">26</div>
+                  <div class="bar"></div>
+                </div>
+
+                <div class="day day--muted">
+                  <div class="day__dow">NDZ</div>
+                  <div class="day__date">27</div>
+                  <div class="bar"></div>
+                </div>
+              </div>
+            </section>
+
+            <div class="grid">
+              <!-- LEFT -->
+              <div class="col col--wide">
+                <!-- TASKS -->
+                <section class="section">
+                  <div class="section__head">
+                    <h2 class="section__kicker">Najbliższe zadania</h2>
+                    <button class="link-btn" type="button">Zobacz wszystko</button>
+                  </div>
+
+                  <div class="cards">
+                    <article class="card">
+                      <div class="card__top">
+                        <span class="tag tag--purple">Studia</span>
+                        <button class="icon-ghost" type="button" aria-label="Edytuj">
+                          <span class="material-symbols-outlined">edit</span>
+                        </button>
+                      </div>
+                      <h3 class="card__title">Prezentacja Marketingowa</h3>
+                      <p class="card__desc">
+                        Przygotować slajdy dotyczące strategii Blue Ocean.
+                      </p>
+                      <div class="meta meta--danger">
+                        <span class="material-symbols-outlined">schedule</span>
+                        <span>Dziś, 16:00</span>
+                      </div>
+                    </article>
+
+                    <article class="card">
+                      <div class="card__top">
+                        <span class="tag tag--orange">Projekty</span>
+                        <button class="icon-ghost" type="button" aria-label="Edytuj">
+                          <span class="material-symbols-outlined">edit</span>
+                        </button>
+                      </div>
+                      <h3 class="card__title">Kodowanie Dashboardu</h3>
+                      <p class="card__desc">
+                        Zakończyć implementację widoku mobilnego dla nowej wersji.
+                      </p>
+                      <div class="meta meta--muted">
+                        <span class="material-symbols-outlined">schedule</span>
+                        <span>Jutro, 09:00</span>
+                      </div>
+                    </article>
+
+                    <article class="card">
+                      <div class="card__top">
+                        <span class="tag tag--teal">Inne</span>
+                        <button class="icon-ghost" type="button" aria-label="Edytuj">
+                          <span class="material-symbols-outlined">edit</span>
+                        </button>
+                      </div>
+                      <h3 class="card__title">Zakupy spożywcze</h3>
+                      <p class="card__desc">
+                        Lista w notatniku: owoce, warzywa, mleko roślinne.
+                      </p>
+                      <div class="meta meta--muted">
+                        <span class="material-symbols-outlined">schedule</span>
+                        <span>Sobota</span>
+                      </div>
+                    </article>
+
+                    <button class="card card--add" type="button">
+                      <span class="material-symbols-outlined">add_circle</span>
+                      <span>Dodaj nowe</span>
+                    </button>
+                  </div>
+                </section>
+
+                <!-- PROGRESS -->
+                <section class="section">
+                  <h2 class="section__kicker">Twoje postępy</h2>
+
+                  <div class="progress">
+                    <div class="progress__ring" aria-label="Postęp 75%">
+                      <!-- 2πr ≈ 251.2 dla r=40 -->
+                      <svg viewBox="0 0 100 100" class="ring">
+                        <circle class="ring__bg" cx="50" cy="50" r="40" />
+                        <!-- 75% => offset 25% -->
+                        <circle class="ring__fg" cx="50" cy="50" r="40" />
+                      </svg>
+                      <div class="progress__value">75%</div>
+                    </div>
+
+                    <div class="progress__text">
+                      <h3>Świetna robota!</h3>
+                      <p>
+                        Ukończyłeś już 3 z 4 zaplanowanych zadań na dzisiaj.
+                        Została Ci tylko nauka języka!
+                      </p>
+
+                      <div class="stats">
+                        <div class="stat">
+                          <div class="stat__label">Zrobione</div>
+                          <div class="stat__value stat__value--primary">12/15</div>
+                        </div>
+                        <div class="divider" aria-hidden="true"></div>
+                        <div class="stat">
+                          <div class="stat__label">Nawyki</div>
+                          <div class="stat__value stat__value--teal">4/6</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              </div>
+
+              <!-- RIGHT -->
+              <div class="col">
+                <!-- HABITS -->
+                <section class="section">
+                  <div class="section__head">
+                    <h2 class="section__kicker">Nawyki na dziś</h2>
+                    <button class="icon-ghost" type="button" aria-label="Więcej">
+                      <span class="material-symbols-outlined">more_vert</span>
+                    </button>
+                  </div>
+
+                  <div class="habits">
+                    <div class="habit habit--done">
+                      <div class="check check--done" aria-hidden="true">
+                        <span class="material-symbols-outlined">check</span>
+                      </div>
+                      <div class="habit__text">
+                        <div class="habit__title">Picie wody (2L)</div>
+                        <div class="habit__sub">Zrealizowano</div>
+                      </div>
+                      <span class="material-symbols-outlined habit__icon habit__icon--teal">
+                        local_drink
+                      </span>
+                    </div>
+
+                    <div class="habit habit--done">
+                      <div class="check check--done check--solid" aria-hidden="true">
+                        <span class="material-symbols-outlined">check</span>
+                      </div>
+                      <div class="habit__text">
+                        <div class="habit__title">Nauka 30 min</div>
+                        <div class="habit__sub">Zrealizowano</div>
+                      </div>
+                      <span class="material-symbols-outlined habit__icon habit__icon--purple">
+                        menu_book
+                      </span>
+                    </div>
+
+                    <div class="habit">
+                      <div class="check" aria-hidden="true"></div>
+                      <div class="habit__text">
+                        <div class="habit__title habit__title--plain">Medytacja</div>
+                        <div class="habit__sub">10 minut</div>
+                      </div>
+                      <span class="material-symbols-outlined habit__icon habit__icon--pink">
+                        self_improvement
+                      </span>
+                    </div>
+
+                    <div class="habit">
+                      <div class="check" aria-hidden="true"></div>
+                      <div class="habit__text">
+                        <div class="habit__title habit__title--plain">Bieganie</div>
+                        <div class="habit__sub">3 km</div>
+                      </div>
+                      <span class="material-symbols-outlined habit__icon habit__icon--orange">
+                        directions_run
+                      </span>
+                    </div>
+
+                    <button class="habits__edit" type="button">Edytuj listę nawyków</button>
+                  </div>
+                </section>
+
+                <!-- TIP -->
+                <section class="tip">
+                  <div class="tip__head">
+                    <span class="material-symbols-outlined">lightbulb</span>
+                    <span>Wskazówka dnia</span>
+                  </div>
+                  <p>
+                    Robienie przerw co 25 minut (Pomodoro) zwiększa Twoją produktywność o 40%!
+                  </p>
+                </section>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
     </div>
-
-</body>
-
+  </body>
 </html>

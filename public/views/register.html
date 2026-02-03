@@ -1,27 +1,59 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="public/styles/main.css">
-    <link rel="stylesheet" type="text/css" href="public/styles/login.css">
-    <title>Ekran Rejestracji Studify</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Studify - Rejestracja</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="public/styles/register.css?v=3">
+  <script src="public/scripts/passwordToggle.js" defer></script>
+  <script src="public/scripts/validation.js" defer></script>
 </head>
 <body>
+
+  <div class="container">
+    <h1>Studify</h1>
+    <h2>Stwórz swoje konto</h2>
+    <p class="subtitle">Dołącz do Studify, aby efektywnie zarządzać zadaniami i nawykami.</p>
+
     <form action="\register" method ="POST">
-        <h1>REGISTER</h1>
             <?php if(isset($messages)): ?>
                 <p class="messages">
                     <?= $messages; ?>
                 </p>
             <?php endif; ?>
+      <input name="firstName" type="text" placeholder="np. Jan" required>
+      <input name="lastName" type="text" placeholder="np. Kowalski" required>
+      <input name="email" type="email" placeholder="twoj.email@uniwersytet.pl" required>
 
-        <input name="email" type="email" placeholder="Twój email">
-        <input name="password" type="password" placeholder="Twoje hasło">
-        <input name="password2" type="password" placeholder="Powtórz hasło">
-        <input name="firstName" type="text" placeholder="Twoje imię">
-        <input name="lastName" type="text" placeholder="Twoje nazwisko">
-        <button type="submit">REGISTER</button>
+      <div class="input-group">
+        <input name="password" type="password" placeholder="Stwórz silne hasło" id="password" required>
+        <i class="fa-solid fa-eye-slash icon" id="togglePassword"></i>
+      </div>
+
+      <div class="input-group">
+        <input name="password2" type="password" placeholder="Wprowadź ponownie hasło" id="confirmPassword" required>
+        <i class="fa-solid fa-eye-slash icon" id="toggleConfirmPassword"></i>
+      </div>
+
+      <button type="submit" class="btn-primary">Zarejestruj się</button>
     </form>
+
+    <p class="login-link">Masz już konto? <a href="/login">Zaloguj się</a></p>
+
+    <p class="footer">
+      Zakładając konto, zgadzasz się na nasze
+      <a href="#">Warunki korzystania z usługi</a>
+      oraz
+      <a href="#">Politykę Prywatności</a>.
+    </p>
+  </div>
+
+  <script>
+    initPasswordToggle('password', 'togglePassword');
+    initPasswordToggle('confirmPassword', 'toggleConfirmPassword');
+  </script>
+
 </body>
 </html>

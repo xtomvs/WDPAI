@@ -8,6 +8,7 @@ class SecurityController extends AppController {
     private $userRepository;
 
     public function __construct() {
+        parent::__construct();
         $this->userRepository = new UserRepository();
     }
 
@@ -21,20 +22,25 @@ class SecurityController extends AppController {
         $password = $_POST["password"] ?? '';
 
         if (empty($email) || empty($password)) {
-            return $this->render('login', ['messages' => 'Fill all fields']);
+            return $this->render('login', ['messages' => '<span class="message-error">Wypełnij wszystkie pola!</span>']);
         }
 
         $userRow = $this->userRepository->getUserByEmail($email);
 
         if (!$userRow) {
-            return $this->render('login', ['messages' => 'User not found']);
+            return $this->render('login', ['messages' => '<span class="message-error">Użytkownik nie znaleziony!</span>']);
         }
 
         if (!password_verify($password, $userRow['password'])) {
-            return $this->render('login', ['messages' => 'Wrong password']);
+            return $this->render('login', ['messages' => '<span class="message-error">Błędne hasło!</span>']);
         }
 
-        //TODO create user session, cookie, token
+
+        session_regenerate_id(true);
+        $_SESSION['user_id'] = $userRow['id'] ?? null;
+        $_SESSION['user_email'] = $userRow['email'] ?? $email;
+        $_SESSION['user_firstname'] = $userRow['firstname'] ?? null;
+        $_SESSION['is_logged_in'] = true;
 
 
         $url = "http://$_SERVER[HTTP_HOST]";
@@ -54,14 +60,34 @@ class SecurityController extends AppController {
         $lastName = $_POST["lastName"] ?? '';
 
         if (empty($email) || empty($password) || empty($password2) || empty($firstName) || empty($lastName)) {
-            return $this->render('register', ['messages' => 'Fill all fields']);
+            return $this->render('register', ['messages' => 'Wypełnij wszystkie pola!']);
+        }
+
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return $this->render('register', ['messages' => '<span class="message-error">Niepoprawny adres e-mail!</span>']);
+        }
+
+        if (strlen($password) < 6) {
+            return $this->render('register', ['messages' => '<span class="message-error">Hasło musi mieć minimum 6 znaków!</span>']);
+        }
+
+        $namePattern = '/^[A-Za-zĄĆĘŁŃÓŚŹŻąćęłńóśźż]+([ -][A-Za-zĄĆĘŁŃÓŚŹŻąćęłńóśźż]+)*$/u';
+        if (mb_strlen(trim($firstName)) < 2 || !preg_match($namePattern, $firstName)) {
+            return $this->render('register', ['messages' => '<span class="message-error">Niepoprawne imię!</span>']);
+        }
+
+        if (mb_strlen(trim($lastName)) < 2 || !preg_match($namePattern, $lastName)) {
+            return $this->render('register', ['messages' => '<span class="message-error">Niepoprawne nazwisko!</span>']);
         }
 
         if ($password !== $password2) {
-            return $this->render('register', ['messages' => 'Passwords do not match']);
+            return $this->render('register', ['messages' => '<span class="message-error">Hasła nie są identyczne!</span>']);
         }
 
-        //TODO chceck if user with this email already exists
+        $existingUser = $this->userRepository->getUserByEmail($email);
+        if ($existingUser) {
+            return $this->render('register', ['messages' => '<span class="message-error">Użytkownik z tym emailem już istnieje!</span>']);
+        }
 
         $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
 
@@ -69,6 +95,33 @@ class SecurityController extends AppController {
             $email, $hashedPassword, $firstName, $lastName
         );
 
-        return $this->render('login', ['messages' => 'User registered successfully, please login!']);
+        return $this->render('login', ['messages' => '<span class="message-success">Użytkownik zarejestrowany pomyślnie, zaloguj się!</span>']);
+    }
+
+    public function logout()
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        $_SESSION = [];
+
+        if (ini_get("session.use_cookies")) {
+            $params = session_get_cookie_params();
+            setcookie(
+                session_name(),
+                '',
+                time() - 42000,
+                $params["path"],
+                $params["domain"],
+                $params["secure"],
+                $params["httponly"]
+            );
+        }
+
+        session_destroy();
+
+        $url = "http://$_SERVER[HTTP_HOST]";
+        header("Location: {$url}/login");
     }
 }

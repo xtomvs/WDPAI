@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Studify – Kalendarz</title>
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Material Symbols -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="public/styles/calendar.css?v=3" />
+  </head>
+
+  <body>
+    <div class="app">
+      <!-- SIDEBAR -->
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand__logo">
+            <span class="material-symbols-outlined brand__icon">task_alt</span>
+          </div>
+          <div class="brand__name">Studify</div>
+        </div>
+
+        <div class="sidebar__content">
+          <nav class="nav">
+            <a class="nav__item" href="/dashboard">
+              <span class="material-symbols-outlined">dashboard</span>
+              <span>Panel Główny</span>
+            </a>
+
+            <a class="nav__item" href="/tasks">
+              <span class="material-symbols-outlined">list_alt</span>
+              <span>Lista Zadań</span>
+            </a>
+
+            <a class="nav__item nav__item--active" href="/calendar">
+              <span class="material-symbols-outlined">calendar_month</span>
+              <span>Kalendarz</span>
+            </a>
+
+            <a class="nav__item" href="/habits">
+              <span class="material-symbols-outlined">repeat</span>
+              <span>Nawyki</span>
+            </a>
+          </nav>
+
+          <div class="sidebar__footer">
+            <a href="/settings" class="profile">
+              <div class="profile__avatar" aria-hidden="true"></div>
+              <div class="profile__meta">
+                <div class="profile__name">Jan Kowalski</div>
+                <div class="profile__email">j.kowalski@email.com</div>
+              </div>
+            </a>
+
+            <button class="logout" type="button" onclick="window.location.href='/logout'">
+              <span class="material-symbols-outlined">logout</span>
+              <span>Wyloguj</span>
+            </button>
+          </div>
+        </div>
+      </aside>
+
+      <!-- MAIN -->
+      <main class="main">
+        <!-- TOPBAR -->
+        <header class="topbar">
+          <div class="topbar__left">
+            <div class="topbar__title" id="currentMonth">Styczeń 2026</div>
+            <div class="topbar__nav">
+              <button class="nav-btn" id="prevMonth" aria-label="Poprzedni miesiąc">
+                <span class="material-symbols-outlined">chevron_left</span>
+              </button>
+              <button class="nav-btn" id="nextMonth" aria-label="Następny miesiąc">
+                <span class="material-symbols-outlined">chevron_right</span>
+              </button>
+            </div>
+            <div class="view-toggle">
+              <button class="view-btn view-btn--active" data-view="month">Miesiąc</button>
+              <button class="view-btn" data-view="week">Tydzień</button>
+            </div>
+          </div>
+
+          <div class="topbar__actions">
+            <label class="search" aria-label="Szukaj">
+              <span class="material-symbols-outlined">search</span>
+              <input type="text" placeholder="Szukaj..." id="searchInput" />
+            </label>
+
+            <button class="icon-btn" type="button" aria-label="Powiadomienia">
+              <span class="material-symbols-outlined">notifications</span>
+              <span class="dot" aria-hidden="true"></span>
+            </button>
+
+            <button class="add-btn" type="button" id="addEventBtn">
+              <span class="material-symbols-outlined">add</span>
+              <span>Dodaj</span>
+            </button>
+          </div>
+        </header>
+
+        <!-- FILTERS -->
+        <div class="filters">
+          <div class="filters__left">
+            <span class="filters__label">FILTRY:</span>
+            <div class="filters__tags" id="filterTags">
+              <button class="filter-tag filter-tag--blue" data-category="uczelnia">
+                <span class="filter-tag__dot"></span>
+                Uczelnia
+                <span class="material-symbols-outlined filter-tag__close">close</span>
+              </button>
+              <button class="filter-tag filter-tag--purple" data-category="prywatne">
+                <span class="filter-tag__dot"></span>
+                Prywatne
+                <span class="material-symbols-outlined filter-tag__close">close</span>
+              </button>
+              <button class="filter-tag filter-tag--green" data-category="projekt">
+                <span class="filter-tag__dot"></span>
+                Projekt
+                <span class="material-symbols-outlined filter-tag__close">close</span>
+              </button>
+              <button class="filter-tag filter-tag--orange" data-category="sport">
+                <span class="filter-tag__dot"></span>
+                Sport
+                <span class="material-symbols-outlined filter-tag__close">close</span>
+              </button>
+            </div>
+            <button class="add-category-btn" id="addCategoryBtn">
+              <span class="material-symbols-outlined">add</span>
+              Dodaj kategorię
+            </button>
+          </div>
+          <div class="filters__right">
+            <span class="filters__hint">Widok zoptymalizowany pod Twój plan zajęć</span>
+          </div>
+        </div>
+
+        <!-- CALENDAR CONTENT -->
+        <div class="calendar-wrapper">
+          <div class="calendar">
+            <!-- CALENDAR HEADER -->
+            <div class="calendar__header">
+              <div class="calendar__day-name">Poniedziałek</div>
+              <div class="calendar__day-name">Wtorek</div>
+              <div class="calendar__day-name">Środa</div>
+              <div class="calendar__day-name">Czwartek</div>
+              <div class="calendar__day-name">Piątek</div>
+              <div class="calendar__day-name">Sobota</div>
+              <div class="calendar__day-name calendar__day-name--sunday">Niedziela</div>
+            </div>
+
+            <!-- CALENDAR GRID -->
+            <div class="calendar__grid" id="calendarGrid">
+              <!-- Cells will be generated by JavaScript -->
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- ADD EVENT MODAL -->
+    <div class="modal" id="eventModal">
+      <div class="modal__backdrop"></div>
+      <div class="modal__content">
+        <div class="modal__header">
+          <h2 class="modal__title">Dodaj wydarzenie</h2>
+          <button class="modal__close" id="closeModal">
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        </div>
+        <form class="modal__form" id="eventForm">
+          <div class="form-group">
+            <label for="eventTitle">Tytuł wydarzenia</label>
+            <input type="text" id="eventTitle" placeholder="Np. Wykład z matematyki" required />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="eventDate">Data</label>
+              <input type="date" id="eventDate" required />
+            </div>
+            <div class="form-group">
+              <label for="eventTime">Godzina</label>
+              <input type="time" id="eventTime" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="eventCategory">Kategoria</label>
+            <select id="eventCategory">
+              <option value="uczelnia">Uczelnia</option>
+              <option value="prywatne">Prywatne</option>
+              <option value="projekt">Projekt</option>
+              <option value="sport">Sport</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="eventDescription">Opis (opcjonalnie)</label>
+            <textarea id="eventDescription" rows="3" placeholder="Dodatkowe informacje..."></textarea>
+          </div>
+          <div class="modal__actions">
+            <button type="button" class="btn btn--secondary" id="cancelEvent">Anuluj</button>
+            <button type="submit" class="btn btn--primary">Zapisz</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- EVENT DETAILS MODAL -->
+    <div class="modal" id="eventDetailsModal">
+      <div class="modal__backdrop"></div>
+      <div class="modal__content modal__content--small">
+        <div class="modal__header">
+          <h2 class="modal__title" id="detailsTitle">Szczegóły wydarzenia</h2>
+          <button class="modal__close" id="closeDetailsModal">
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        </div>
+        <div class="event-details">
+          <div class="event-details__row">
+            <span class="material-symbols-outlined">schedule</span>
+            <span id="detailsTime">10:00 - 12:00</span>
+          </div>
+          <div class="event-details__row">
+            <span class="material-symbols-outlined">calendar_today</span>
+            <span id="detailsDate">8 stycznia 2026</span>
+          </div>
+          <div class="event-details__row">
+            <span class="material-symbols-outlined">label</span>
+            <span id="detailsCategory">Uczelnia</span>
+          </div>
+          <div class="event-details__description" id="detailsDescription">
+            <!-- Description will be inserted here -->
+          </div>
+        </div>
+        <div class="modal__actions">
+          <button type="button" class="btn btn--danger" id="deleteEvent">
+            <span class="material-symbols-outlined">delete</span>
+            Usuń
+          </button>
+          <button type="button" class="btn btn--primary" id="editEvent">
+            <span class="material-symbols-outlined">edit</span>
+            Edytuj
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="public/scripts/calendar.js"></script>
+  </body>
+</html>

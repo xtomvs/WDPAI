@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Studify – Ustawienia Profilu</title>
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Material Symbols -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="public/styles/settings.css?v=3" />
+  </head>
+
+  <body>
+    <div class="app">
+      <!-- SIDEBAR -->
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand__logo">
+            <span class="material-symbols-outlined brand__icon">task_alt</span>
+          </div>
+          <div class="brand__name">Studify</div>
+        </div>
+
+        <div class="sidebar__content">
+          <nav class="nav">
+            <a class="nav__item" href="/dashboard">
+              <span class="material-symbols-outlined">dashboard</span>
+              <span>Panel Główny</span>
+            </a>
+
+            <a class="nav__item" href="/tasks">
+              <span class="material-symbols-outlined">list_alt</span>
+              <span>Lista Zadań</span>
+            </a>
+
+            <a class="nav__item" href="/calendar">
+              <span class="material-symbols-outlined">calendar_month</span>
+              <span>Kalendarz</span>
+            </a>
+
+            <a class="nav__item" href="/habits">
+              <span class="material-symbols-outlined">repeat</span>
+              <span>Nawyki</span>
+            </a>
+          </nav>
+
+          <div class="sidebar__footer">
+            <a href="/settings" class="profile profile--active">
+              <div class="profile__avatar" aria-hidden="true"></div>
+              <div class="profile__meta">
+                <div class="profile__name">Jan Kowalski</div>
+                <div class="profile__email">j.kowalski@email.com</div>
+              </div>
+            </a>
+
+            <button class="logout" type="button" onclick="window.location.href='/logout'">
+              <span class="material-symbols-outlined">logout</span>
+              <span>Wyloguj</span>
+            </button>
+          </div>
+        </div>
+      </aside>
+
+      <!-- MAIN -->
+      <main class="main">
+        <!-- TOPBAR -->
+        <header class="topbar">
+          <div class="topbar__left">
+            <h1 class="topbar__title">Ustawienia</h1>
+          </div>
+
+          <div class="topbar__actions">
+            <button class="icon-btn" type="button" aria-label="Powiadomienia">
+              <span class="material-symbols-outlined">notifications</span>
+              <span class="dot" aria-hidden="true"></span>
+            </button>
+
+            <button class="btn btn--primary" id="saveChangesBtn">
+              <span>Zapisz zmiany</span>
+            </button>
+          </div>
+        </header>
+
+        <!-- CONTENT -->
+        <div class="content">
+          <div class="container">
+            <!-- PAGE HEADER -->
+            <div class="page-header">
+              <h2 class="page-header__title">Twoje Konto</h2>
+              <p class="page-header__subtitle">Zarządzaj swoimi danymi osobowymi i bezpieczeństwem.</p>
+            </div>
+
+            <!-- SECTIONS -->
+            <div class="settings-grid">
+              
+              <!-- PERSONAL DATA -->
+              <section class="settings-section">
+                <div class="settings-section__header">
+                  <span class="material-symbols-outlined settings-section__icon">person</span>
+                  <h3 class="settings-section__title">Dane osobiste</h3>
+                </div>
+                <div class="settings-section__content">
+                  <div class="form-grid">
+                    <div class="form-group">
+                      <label for="fullName">Imię i Nazwisko</label>
+                      <input type="text" id="fullName" value="Jan Kowalski" />
+                    </div>
+                    <div class="form-group">
+                      <label for="email">Adres E-mail</label>
+                      <input type="email" id="email" value="j.kowalski@email.com" />
+                    </div>
+                    <div class="form-group">
+                      <label for="studentId">Numer Indeksu</label>
+                      <input type="text" id="studentId" placeholder="Wprowadź numer" />
+                    </div>
+                    <div class="form-group">
+                      <label for="university">Uczelnia</label>
+                      <input type="text" id="university" value="Uniwersytet Jagielloński" />
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <!-- PREFERENCES -->
+              <section class="settings-section">
+                <div class="settings-section__header">
+                  <span class="material-symbols-outlined settings-section__icon">settings_suggest</span>
+                  <h3 class="settings-section__title">Preferencje</h3>
+                </div>
+                <div class="settings-section__content">
+                  <div class="preference-item">
+                    <div class="preference-item__text">
+                      <p class="preference-item__title">Tryb Ciemny</p>
+                      <p class="preference-item__description">Dostosuj wygląd interfejsu do pory dnia.</p>
+                    </div>
+                    <label class="toggle">
+                      <input type="checkbox" id="darkModeToggle" />
+                      <span class="toggle__slider"></span>
+                    </label>
+                  </div>
+
+                  <div class="preference-item">
+                    <div class="preference-item__text">
+                      <p class="preference-item__title">Powiadomienia E-mail</p>
+                      <p class="preference-item__description">Otrzymuj przypomnienia o nadchodzących terminach.</p>
+                    </div>
+                    <label class="toggle">
+                      <input type="checkbox" id="emailNotifications" checked />
+                      <span class="toggle__slider"></span>
+                    </label>
+                  </div>
+
+                  <div class="preference-item">
+                    <div class="preference-item__text">
+                      <p class="preference-item__title">Język aplikacji</p>
+                      <p class="preference-item__description">Wybierz preferowany język interfejsu.</p>
+                    </div>
+                    <select id="languageSelect" class="select">
+                      <option value="pl">Polski</option>
+                      <option value="en">English</option>
+                      <option value="de">Deutsch</option>
+                    </select>
+                  </div>
+                </div>
+              </section>
+
+              <!-- INTEGRATIONS -->
+              <section class="settings-section">
+                <div class="settings-section__header">
+                  <span class="material-symbols-outlined settings-section__icon">hub</span>
+                  <h3 class="settings-section__title">Integracje</h3>
+                </div>
+                <div class="settings-section__content">
+                  <div class="integration-card integration-card--purple">
+                    <div class="integration-card__info">
+                      <div class="integration-card__icon">
+                        <span class="material-symbols-outlined">calendar_month</span>
+                      </div>
+                      <div class="integration-card__text">
+                        <p class="integration-card__title">Google Calendar</p>
+                        <p class="integration-card__description">Synchronizuj swoje zajęcia i egzaminy.</p>
+                      </div>
+                    </div>
+                    <button class="btn btn--outline" data-integration="google">Połącz</button>
+                  </div>
+
+                  <div class="integration-card integration-card--teal">
+                    <div class="integration-card__info">
+                      <div class="integration-card__icon integration-card__icon--teal">
+                        <span class="material-symbols-outlined">cloud_done</span>
+                      </div>
+                      <div class="integration-card__text">
+                        <p class="integration-card__title">OneDrive / SharePoint</p>
+                        <p class="integration-card__description">Dostęp do materiałów z wykładów.</p>
+                      </div>
+                    </div>
+                    <div class="integration-card__status">
+                      <span class="integration-card__connected">Połączono</span>
+                      <button class="btn btn--icon" data-integration="onedrive" aria-label="Odłącz">
+                        <span class="material-symbols-outlined">link_off</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <!-- DANGER ZONE -->
+              <section class="settings-section settings-section--danger">
+                <div class="settings-section__header">
+                  <span class="material-symbols-outlined settings-section__icon">warning</span>
+                  <h3 class="settings-section__title">Strefa Niebezpieczeństwa</h3>
+                </div>
+                <div class="settings-section__content">
+                  <div class="danger-zone">
+                    <p class="danger-zone__text">
+                      Usunięcie konta spowoduje bezpowrotne wykasowanie wszystkich Twoich zadań, nawyków i postępów w nauce.
+                    </p>
+                    <button class="btn btn--danger" id="deleteAccountBtn">
+                      Usuń konto
+                    </button>
+                  </div>
+                </div>
+              </section>
+
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- DELETE ACCOUNT MODAL -->
+    <div class="modal" id="deleteModal">
+      <div class="modal__backdrop"></div>
+      <div class="modal__content">
+        <div class="modal__header">
+          <span class="material-symbols-outlined modal__icon modal__icon--danger">warning</span>
+          <h2 class="modal__title">Usunąć konto?</h2>
+        </div>
+        <p class="modal__text">
+          Tej operacji nie można cofnąć. Wszystkie Twoje dane zostaną permanentnie usunięte.
+        </p>
+        <div class="form-group">
+          <label for="confirmDelete">Wpisz "USUŃ" aby potwierdzić</label>
+          <input type="text" id="confirmDelete" placeholder="USUŃ" />
+        </div>
+        <div class="modal__actions">
+          <button type="button" class="btn btn--secondary" id="cancelDelete">Anuluj</button>
+          <button type="button" class="btn btn--danger" id="confirmDeleteBtn" disabled>Usuń konto</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="public/scripts/settings.js"></script>
+  </body>
+</html>

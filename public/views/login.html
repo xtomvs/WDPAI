@@ -1,24 +1,63 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="public/styles/main.css">
-    <link rel="stylesheet" type="text/css" href="public/styles/login.css">
-    <title>LOGIN</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Studify - Logowanie</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="public/styles/login.css?v=3" />
+  <script src="public/scripts/passwordToggle.js" defer></script>
 </head>
 <body>
-    <form action="\login" method ="POST">
-        <h1>LOGIN</h1>
-            <?php if(isset($messages)): ?>
+
+  <div class="login-container">
+    <div class="left-panel">
+      <img src="https://cdn.pixabay.com/photo/2023/10/31/23/52/generated-to-8356214_1280.png" alt="Ilustracja osoby uczącej się">
+      <h3>Zorganizuj swoją naukę</h3>
+      <p>Studify pomaga Ci zarządzać zadaniami i osiągać cele akademickie bez stresu.</p>
+    </div>
+
+    <div class="right-panel">
+      <h1>Studify</h1>
+      <h2>Witaj z powrotem!</h2>
+      <p>Zaloguj się, aby kontynuować naukę ze Studify.</p>
+
+      <form action="\login" method ="POST">
+        <?php if(isset($messages)): ?>
                 <p class="messages">
                     <?= $messages; ?>
                 </p>
             <?php endif; ?>
+        <div>
+          <label for="email">Adres e-mail</label>
+          <div class="input-group">
+            <input name="email" type="email" placeholder="wpisz swój adres e-mail" required>
+            <i class="fa-solid fa-envelope icon"></i>
+          </div>
+        </div>
 
-        <input name="email" type="email" placeholder="Twój email">
-        <input name="password" type="password" placeholder="Twoje hasło">
-        <button type="submit">LOGIN</button>
-    </form>
+        <div>
+          <label for="password">Hasło</label>
+          <div class="input-group">
+            <input name="password" type="password" placeholder="wpisz swoje hasło" id="password" required>
+            <i class="fa-solid fa-eye-slash icon" id="togglePassword"></i>
+          </div>
+        </div>
+
+        <a href="#" class="forgot-password">Nie pamiętasz hasła?</a>
+
+        <button type="submit" class="btn-primary">Zaloguj się</button>
+
+        <p class="bottom-text">
+          Nie masz konta? <a href="/register">Zarejestruj się</a>
+        </p>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    initPasswordToggle('password', 'togglePassword');
+  </script>
 </body>
 </html>

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Studify – Nawyki</title>
+
+  <!-- Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Material Symbols -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="public/styles/habits.css?v=3" />
+</head>
+<body>
+  <div class="app">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand__logo">
+          <span class="material-symbols-outlined brand__icon">task_alt</span>
+        </div>
+        <div class="brand__name">Studify</div>
+      </div>
+
+      <div class="sidebar__content">
+        <nav class="nav">
+          <a class="nav__item" href="/dashboard">
+            <span class="material-symbols-outlined">dashboard</span>
+            <span>Panel Główny</span>
+          </a>
+
+          <a class="nav__item" href="/tasks">
+            <span class="material-symbols-outlined">list_alt</span>
+            <span>Lista Zadań</span>
+          </a>
+
+          <a class="nav__item" href="/calendar">
+            <span class="material-symbols-outlined">calendar_month</span>
+            <span>Kalendarz</span>
+          </a>
+
+          <a class="nav__item nav__item--active" href="/habits">
+            <span class="material-symbols-outlined">repeat</span>
+            <span>Nawyki</span>
+          </a>
+        </nav>
+
+        <div class="sidebar__footer">
+          <a href="/settings" class="profile">
+            <div class="profile__avatar" aria-hidden="true"></div>
+            <div class="profile__meta">
+              <div class="profile__name" id="userName">Jan Kowalski</div>
+              <div class="profile__email" id="userEmail">j.kowalski@email.com</div>
+            </div>
+          </a>
+
+          <button class="logout" id="logoutBtn" type="button" onclick="window.location.href='/logout'">
+            <span class="material-symbols-outlined">logout</span>
+            <span>Wyloguj</span>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+      <header class="topbar">
+        <div class="topbar__title">Nawyki</div>
+
+        <div class="topbar__actions">
+          <button class="icon-btn" id="searchBtn" type="button" aria-label="Szukaj">
+            <span class="material-symbols-outlined">search</span>
+          </button>
+          <button class="icon-btn bell" id="bellBtn" type="button" aria-label="Powiadomienia">
+            <span class="dot" aria-hidden="true"></span>
+            <span class="material-symbols-outlined">notifications</span>
+          </button>
+        </div>
+      </header>
+
+      <div class="container">
+        <section class="hero">
+          <div class="hero-left">
+            <h1>Twoje Postępy</h1>
+            <p>Kontynuuj budowanie zdrowych nawyków studenckich.</p>
+          </div>
+
+          <button class="btn-primary" id="newHabitBtn" type="button">
+            <span class="material-symbols-outlined">add</span>
+            Nowy nawyk
+          </button>
+        </section>
+
+        <section class="filters">
+          <div class="tabs" role="tablist" aria-label="Filtry">
+            <button class="tab active" type="button" data-filter="all">Wszystkie</button>
+            <button class="tab" type="button" data-filter="studia">Studia</button>
+            <button class="tab" type="button" data-filter="zdrowie">Zdrowie</button>
+          </div>
+
+          <div class="legend">
+            <div class="legend-item">
+              <span class="lg-dot done" aria-hidden="true"></span> Zrobione
+            </div>
+            <div class="legend-item">
+              <span class="lg-dot todo" aria-hidden="true"></span> Do zrobienia
+            </div>
+          </div>
+        </section>
+
+        <section class="list" id="habitsList" aria-label="Lista nawyków">
+          <!-- renderuje JS -->
+        </section>
+
+        <section class="stats" aria-label="Podsumowanie">
+          <article class="stat stat-blue">
+            <div class="stat-label">Ukończone dzisiaj</div>
+            <div class="stat-row">
+              <div class="stat-value" id="statToday">4 / 6</div>
+              <div class="stat-sub" id="statTodayPct">67%</div>
+            </div>
+          </article>
+
+          <article class="stat stat-green">
+            <div class="stat-label">Najdłuższa seria</div>
+            <div class="stat-row">
+              <div class="stat-value" id="statStreak">31 dni</div>
+              <div class="stat-ic" aria-hidden="true">
+                <span class="material-symbols-outlined">local_fire_department</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="stat stat-orange">
+            <div class="stat-label">Punkty postępu</div>
+            <div class="stat-row">
+              <div class="stat-value" id="statPoints">1,250</div>
+              <div class="stat-sub up" id="statPointsDelta">+12%</div>
+            </div>
+          </article>
+        </section>
+      </div>
+
+      <!-- MODAL: New/Edit Habit -->
+      <div class="modal" id="habitModal" aria-hidden="true">
+        <div class="modal-backdrop" data-close="1"></div>
+        <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+          <div class="modal-head">
+            <h2 id="modalTitle">Nowy nawyk</h2>
+            <button class="icon-btn" type="button" data-close="1" aria-label="Zamknij">
+              <span class="material-symbols-outlined">close</span>
+            </button>
+          </div>
+
+          <form id="habitForm" class="modal-body">
+            <input type="hidden" id="habitId" value="" />
+
+            <label class="field">
+              <span>Nazwa</span>
+              <input id="habitTitle" type="text" required placeholder="np. Codzienna nauka (2h)" />
+            </label>
+
+            <div class="row">
+              <label class="field">
+                <span>Kategoria</span>
+                <select id="habitCategory" required>
+                  <option value="studia">Studia</option>
+                  <option value="zdrowie">Zdrowie</option>
+                </select>
+              </label>
+
+              <label class="field">
+                <span>Tryb</span>
+                <select id="habitFrequency" required>
+                  <option value="daily">Codziennie</option>
+                  <option value="3x">3× w tygodniu</option>
+                  <option value="custom">Własny</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="row">
+              <label class="field">
+                <span>Kolor ikonki</span>
+                <select id="habitAccent">
+                  <option value="blue">Niebieski</option>
+                  <option value="green">Zielony</option>
+                  <option value="purple">Fioletowy</option>
+                  <option value="orange">Pomarańczowy</option>
+                </select>
+              </label>
+
+              <label class="field">
+                <span>Punkty (za dzień)</span>
+                <input id="habitPoints" type="number" min="0" step="1" value="10" />
+              </label>
+            </div>
+
+            <div class="modal-actions">
+              <button class="btn-ghost" type="button" data-close="1">Anuluj</button>
+              <button class="btn-primary" type="submit" id="saveHabitBtn">Zapisz</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="public/scripts/habits.js"></script>
+</body>
+</html>

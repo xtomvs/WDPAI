@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Studify – Lista Zadań</title>
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Material Symbols -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="public/styles/tasks.css?=3" />
+  </head>
+
+  <body>
+    <div class="app">
+      <!-- SIDEBAR -->
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand__logo">
+            <span class="material-symbols-outlined brand__icon">task_alt</span>
+          </div>
+          <div class="brand__name">Studify</div>
+        </div>
+
+        <div class="sidebar__content">
+          <nav class="nav">
+            <a class="nav__item" href="/dashboard">
+              <span class="material-symbols-outlined">dashboard</span>
+              <span>Panel Główny</span>
+            </a>
+
+            <a class="nav__item nav__item--active" href="/tasks">
+              <span class="material-symbols-outlined">list_alt</span>
+              <span>Lista Zadań</span>
+            </a>
+
+            <a class="nav__item" href="/calendar">
+              <span class="material-symbols-outlined">calendar_month</span>
+              <span>Kalendarz</span>
+            </a>
+
+            <a class="nav__item" href="/habits">
+              <span class="material-symbols-outlined">repeat</span>
+              <span>Nawyki</span>
+            </a>
+          </nav>
+
+          <div class="sidebar__footer">
+            <a href="/settings" class="profile">
+              <div class="profile__avatar" aria-hidden="true"></div>
+              <div class="profile__meta">
+                <div class="profile__name">Jan Kowalski</div>
+                <div class="profile__email">j.kowalski@email.com</div>
+              </div>
+            </a>
+
+            <button class="logout" type="button" onclick="window.location.href='/logout'">
+              <span class="material-symbols-outlined">logout</span>
+              <span>Wyloguj</span>
+            </button>
+          </div>
+        </div>
+      </aside>
+
+      <!-- MAIN -->
+      <main class="main">
+        <!-- TOPBAR -->
+        <header class="topbar">
+          <div class="topbar__left">
+            <h2 class="topbar__title">Lista Zadań</h2>
+          </div>
+
+          <div class="topbar__actions">
+            <button class="icon-btn" type="button" aria-label="Szukaj" id="searchToggle">
+              <span class="material-symbols-outlined">search</span>
+            </button>
+
+            <button class="icon-btn" type="button" aria-label="Powiadomienia">
+              <span class="material-symbols-outlined">notifications</span>
+              <span class="dot" aria-hidden="true"></span>
+            </button>
+          </div>
+        </header>
+
+        <!-- CONTENT -->
+        <div class="content">
+          <div class="container">
+            <!-- PAGE HEADER -->
+            <div class="page-header">
+              <div class="page-header__text">
+                <h1 class="page-header__title">Moje zadania</h1>
+                <p class="page-header__subtitle" id="tasksSummary">Masz dzisiaj 3 zadania do ukończenia.</p>
+              </div>
+              <button class="btn btn--primary btn--lg" id="addTaskBtn">
+                <span class="material-symbols-outlined">add</span>
+                <span>Dodaj nowe zadanie</span>
+              </button>
+            </div>
+
+            <!-- TOOLBAR -->
+            <div class="toolbar">
+              <div class="toolbar__left">
+                <button class="toolbar__btn" id="filterBtn">
+                  <span class="material-symbols-outlined">filter_list</span>
+                  <span>Filtruj</span>
+                </button>
+                <button class="toolbar__btn" id="dateFilterBtn">
+                  <span class="material-symbols-outlined">calendar_today</span>
+                  <span>Data</span>
+                </button>
+                <div class="toolbar__divider"></div>
+                <div class="toolbar__tags" id="activeFilters">
+                  <!-- Active filter tags will be inserted here -->
+                </div>
+              </div>
+              <div class="toolbar__right">
+                <div class="view-toggle">
+                  <button class="view-toggle__btn view-toggle__btn--active" data-view="list" aria-label="Widok listy">
+                    <span class="material-symbols-outlined">view_list</span>
+                  </button>
+                  <button class="view-toggle__btn" data-view="grid" aria-label="Widok siatki">
+                    <span class="material-symbols-outlined">grid_view</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- TASKS TABLE -->
+            <div class="tasks-container">
+              <div class="tasks-table">
+                <div class="tasks-table__header">
+                  <div class="tasks-table__col tasks-table__col--checkbox">
+                    <input type="checkbox" class="checkbox" id="selectAll" />
+                  </div>
+                  <div class="tasks-table__col tasks-table__col--name">Nazwa zadania</div>
+                  <div class="tasks-table__col tasks-table__col--category">Kategoria</div>
+                  <div class="tasks-table__col tasks-table__col--date">Data</div>
+                  <div class="tasks-table__col tasks-table__col--priority">Priorytet</div>
+                  <div class="tasks-table__col tasks-table__col--actions">Opcje</div>
+                </div>
+                <div class="tasks-table__body" id="tasksList">
+                  <!-- Tasks will be rendered here by JavaScript -->
+                </div>
+              </div>
+
+              <!-- FOOTER -->
+              <div class="tasks-footer">
+                <p class="tasks-footer__count">Wszystkie zadania: <span id="totalTasks">0</span></p>
+                <div class="tasks-footer__pagination">
+                  <button class="pagination-btn" id="prevPage" disabled>
+                    <span class="material-symbols-outlined">chevron_left</span>
+                  </button>
+                  <button class="pagination-btn" id="nextPage">
+                    <span class="material-symbols-outlined">chevron_right</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- GRID VIEW (hidden by default) -->
+            <div class="tasks-grid" id="tasksGrid" style="display: none;">
+              <!-- Grid cards will be rendered here by JavaScript -->
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- ADD/EDIT TASK MODAL -->
+    <div class="modal" id="taskModal">
+      <div class="modal__backdrop"></div>
+      <div class="modal__content">
+        <div class="modal__header">
+          <h2 class="modal__title" id="modalTitle">Dodaj nowe zadanie</h2>
+          <button class="modal__close" id="closeModal">
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        </div>
+        <form class="modal__form" id="taskForm">
+          <div class="form-group">
+            <label for="taskName">Nazwa zadania</label>
+            <input type="text" id="taskName" placeholder="Np. Przygotować prezentację" required />
+          </div>
+          <div class="form-group">
+            <label for="taskDescription">Opis (opcjonalnie)</label>
+            <textarea id="taskDescription" rows="3" placeholder="Dodatkowe szczegóły..."></textarea>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="taskCategory">Kategoria</label>
+              <select id="taskCategory">
+                <option value="studia">Studia</option>
+                <option value="praca">Praca</option>
+                <option value="osobiste">Osobiste</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="taskPriority">Priorytet</label>
+              <select id="taskPriority">
+                <option value="wysoki">Wysoki</option>
+                <option value="sredni">Średni</option>
+                <option value="niski">Niski</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="taskDate">Termin</label>
+            <input type="date" id="taskDate" required />
+          </div>
+          <div class="modal__actions">
+            <button type="button" class="btn btn--secondary" id="cancelTask">Anuluj</button>
+            <button type="submit" class="btn btn--primary">Zapisz zadanie</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- FILTER MODAL -->
+    <div class="modal" id="filterModal">
+      <div class="modal__backdrop"></div>
+      <div class="modal__content modal__content--small">
+        <div class="modal__header">
+          <h2 class="modal__title">Filtruj zadania</h2>
+          <button class="modal__close" id="closeFilterModal">
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        </div>
+        <div class="filter-options">
+          <div class="filter-section">
+            <h3 class="filter-section__title">Kategoria</h3>
+            <div class="filter-checkboxes">
+              <label class="filter-checkbox">
+                <input type="checkbox" value="studia" checked />
+                <span class="filter-checkbox__label">Studia</span>
+              </label>
+              <label class="filter-checkbox">
+                <input type="checkbox" value="praca" checked />
+                <span class="filter-checkbox__label">Praca</span>
+              </label>
+              <label class="filter-checkbox">
+                <input type="checkbox" value="osobiste" checked />
+                <span class="filter-checkbox__label">Osobiste</span>
+              </label>
+            </div>
+          </div>
+          <div class="filter-section">
+            <h3 class="filter-section__title">Priorytet</h3>
+            <div class="filter-checkboxes">
+              <label class="filter-checkbox">
+                <input type="checkbox" value="wysoki" checked />
+                <span class="filter-checkbox__label">Wysoki</span>
+              </label>
+              <label class="filter-checkbox">
+                <input type="checkbox" value="sredni" checked />
+                <span class="filter-checkbox__label">Średni</span>
+              </label>
+              <label class="filter-checkbox">
+                <input type="checkbox" value="niski" checked />
+                <span class="filter-checkbox__label">Niski</span>
+              </label>
+            </div>
+          </div>
+          <div class="filter-section">
+            <h3 class="filter-section__title">Status</h3>
+            <div class="filter-checkboxes">
+              <label class="filter-checkbox">
+                <input type="checkbox" value="active" checked />
+                <span class="filter-checkbox__label">Aktywne</span>
+              </label>
+              <label class="filter-checkbox">
+                <input type="checkbox" value="completed" checked />
+                <span class="filter-checkbox__label">Ukończone</span>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="modal__actions">
+          <button type="button" class="btn btn--secondary" id="resetFilters">Resetuj</button>
+          <button type="button" class="btn btn--primary" id="applyFilters">Zastosuj</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TASK OPTIONS DROPDOWN -->
+    <div class="dropdown" id="taskDropdown">
+      <button class="dropdown__item" data-action="edit">
+        <span class="material-symbols-outlined">edit</span>
+        <span>Edytuj</span>
+      </button>
+      <button class="dropdown__item" data-action="duplicate">
+        <span class="material-symbols-outlined">content_copy</span>
+        <span>Duplikuj</span>
+      </button>
+      <div class="dropdown__divider"></div>
+      <button class="dropdown__item dropdown__item--danger" data-action="delete">
+        <span class="material-symbols-outlined">delete</span>
+        <span>Usuń</span>
+      </button>
+    </div>
+
+    <script src="public/scripts/tasks.js"></script>
+  </body>
+</html>

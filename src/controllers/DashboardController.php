@@ -9,10 +9,13 @@ class DashboardController extends AppController {
     private $cardsRepository;
 
     public function __construct() {
+        parent::__construct();
         $this->cardsRepository = new CardsRepository();
     }
 
-    public function index(?int $id) {
+    public function index() {
+
+        $this->requireLogin();
 
     $cards = [
     [
@@ -59,6 +62,8 @@ class DashboardController extends AppController {
     }
 
     public function search() {
+        $this->requireLogin();
+
         $contentType = isset($_SERVER["CONTENT_TYPE"]) ? trim($_SERVER["CONTENT_TYPE"]) : '';
         header('Content-Type: application/json');
 
