@@ -19,7 +19,7 @@
       rel="stylesheet"
     />
 
-    <link rel="stylesheet" href="public/styles/dashboard.css?v=4" />
+    <link rel="stylesheet" href="public/styles/dashboard.css?v=8" />
   </head>
 
   <body>
@@ -60,8 +60,8 @@
             <a href="/settings" class="profile">
               <div class="profile__avatar" aria-hidden="true"></div>
               <div class="profile__meta">
-                <div class="profile__name">Jan Kowalski</div>
-                <div class="profile__email">j.kowalski@email.com</div>
+                <div class="profile__name" id="user-name">Ładowanie...</div>
+                <div class="profile__email" id="user-email">...</div>
               </div>
             </a>
 
@@ -97,7 +97,7 @@
           <div class="container">
             <section class="hero">
               <div>
-                <h1 class="hero__title">Cześć, Jan! 👋</h1>
+                <h1 class="hero__title" id="greeting">Cześć! 👋</h1>
                 <p class="hero__subtitle">
                   Masz dziś świetny dzień na naukę. Oto Twoje podsumowanie.
                 </p>
@@ -108,51 +108,12 @@
             <section class="section">
               <div class="section__head">
                 <h2 class="section__kicker">Podgląd tygodnia</h2>
-                <div class="section__link section__link--primary">Październik 2024</div>
+                <div class="section__link section__link--primary" id="current-month">Luty 2026</div>
               </div>
 
-              <div class="week">
-                <div class="day">
-                  <div class="day__dow">PON</div>
-                  <div class="day__date">21</div>
-                  <div class="bar"><span style="width: 100%"></span></div>
-                </div>
+              <div class="week" id="week-view">
+                <!-- Week days will be rendered by JavaScript -->
 
-                <div class="day">
-                  <div class="day__dow">WT</div>
-                  <div class="day__date">22</div>
-                  <div class="bar"><span style="width: 80%"></span></div>
-                </div>
-
-                <div class="day day--active">
-                  <div class="day__dow">ŚR</div>
-                  <div class="day__date">23</div>
-                  <div class="bar bar--on-dark"><span style="width: 60%"></span></div>
-                </div>
-
-                <div class="day day--muted">
-                  <div class="day__dow">CZW</div>
-                  <div class="day__date">24</div>
-                  <div class="bar"></div>
-                </div>
-
-                <div class="day day--muted">
-                  <div class="day__dow">PT</div>
-                  <div class="day__date">25</div>
-                  <div class="bar"></div>
-                </div>
-
-                <div class="day day--muted">
-                  <div class="day__dow">SOB</div>
-                  <div class="day__date">26</div>
-                  <div class="bar"></div>
-                </div>
-
-                <div class="day day--muted">
-                  <div class="day__dow">NDZ</div>
-                  <div class="day__date">27</div>
-                  <div class="bar"></div>
-                </div>
               </div>
             </section>
 
@@ -163,62 +124,12 @@
                 <section class="section">
                   <div class="section__head">
                     <h2 class="section__kicker">Najbliższe zadania</h2>
-                    <button class="link-btn" type="button">Zobacz wszystko</button>
+                    <a href="/tasks" class="link-btn">Zobacz wszystko</a>
                   </div>
 
-                  <div class="cards">
-                    <article class="card">
-                      <div class="card__top">
-                        <span class="tag tag--purple">Studia</span>
-                        <button class="icon-ghost" type="button" aria-label="Edytuj">
-                          <span class="material-symbols-outlined">edit</span>
-                        </button>
-                      </div>
-                      <h3 class="card__title">Prezentacja Marketingowa</h3>
-                      <p class="card__desc">
-                        Przygotować slajdy dotyczące strategii Blue Ocean.
-                      </p>
-                      <div class="meta meta--danger">
-                        <span class="material-symbols-outlined">schedule</span>
-                        <span>Dziś, 16:00</span>
-                      </div>
-                    </article>
-
-                    <article class="card">
-                      <div class="card__top">
-                        <span class="tag tag--orange">Projekty</span>
-                        <button class="icon-ghost" type="button" aria-label="Edytuj">
-                          <span class="material-symbols-outlined">edit</span>
-                        </button>
-                      </div>
-                      <h3 class="card__title">Kodowanie Dashboardu</h3>
-                      <p class="card__desc">
-                        Zakończyć implementację widoku mobilnego dla nowej wersji.
-                      </p>
-                      <div class="meta meta--muted">
-                        <span class="material-symbols-outlined">schedule</span>
-                        <span>Jutro, 09:00</span>
-                      </div>
-                    </article>
-
-                    <article class="card">
-                      <div class="card__top">
-                        <span class="tag tag--teal">Inne</span>
-                        <button class="icon-ghost" type="button" aria-label="Edytuj">
-                          <span class="material-symbols-outlined">edit</span>
-                        </button>
-                      </div>
-                      <h3 class="card__title">Zakupy spożywcze</h3>
-                      <p class="card__desc">
-                        Lista w notatniku: owoce, warzywa, mleko roślinne.
-                      </p>
-                      <div class="meta meta--muted">
-                        <span class="material-symbols-outlined">schedule</span>
-                        <span>Sobota</span>
-                      </div>
-                    </article>
-
-                    <button class="card card--add" type="button">
+                  <div class="cards" id="tasks-container">
+                    <!-- Tasks will be rendered by JavaScript -->
+                    <button class="card card--add" type="button" onclick="window.location.href='/tasks'">
                       <span class="material-symbols-outlined">add_circle</span>
                       <span>Dodaj nowe</span>
                     </button>
@@ -230,32 +141,30 @@
                   <h2 class="section__kicker">Twoje postępy</h2>
 
                   <div class="progress">
-                    <div class="progress__ring" aria-label="Postęp 75%">
+                    <div class="progress__ring" id="progress-ring" aria-label="Postęp">
                       <!-- 2πr ≈ 251.2 dla r=40 -->
                       <svg viewBox="0 0 100 100" class="ring">
                         <circle class="ring__bg" cx="50" cy="50" r="40" />
-                        <!-- 75% => offset 25% -->
-                        <circle class="ring__fg" cx="50" cy="50" r="40" />
+                        <circle class="ring__fg" id="progress-circle" cx="50" cy="50" r="40" />
                       </svg>
-                      <div class="progress__value">75%</div>
+                      <div class="progress__value" id="progress-value">0%</div>
                     </div>
 
                     <div class="progress__text">
-                      <h3>Świetna robota!</h3>
-                      <p>
-                        Ukończyłeś już 3 z 4 zaplanowanych zadań na dzisiaj.
-                        Została Ci tylko nauka języka!
+                      <h3 id="progress-title">Ładowanie...</h3>
+                      <p id="progress-description">
+                        Pobieranie danych o Twoich postępach...
                       </p>
 
                       <div class="stats">
                         <div class="stat">
                           <div class="stat__label">Zrobione</div>
-                          <div class="stat__value stat__value--primary">12/15</div>
+                          <div class="stat__value stat__value--primary" id="tasks-done">0/0</div>
                         </div>
                         <div class="divider" aria-hidden="true"></div>
                         <div class="stat">
                           <div class="stat__label">Nawyki</div>
-                          <div class="stat__value stat__value--teal">4/6</div>
+                          <div class="stat__value stat__value--teal" id="habits-done">0/0</div>
                         </div>
                       </div>
                     </div>
@@ -269,79 +178,23 @@
                 <section class="section">
                   <div class="section__head">
                     <h2 class="section__kicker">Nawyki na dziś</h2>
-                    <button class="icon-ghost" type="button" aria-label="Więcej">
+                    <a href="/habits" class="icon-ghost" aria-label="Więcej">
                       <span class="material-symbols-outlined">more_vert</span>
-                    </button>
+                    </a>
                   </div>
 
-                  <div class="habits">
-                    <div class="habit habit--done">
-                      <div class="check check--done" aria-hidden="true">
-                        <span class="material-symbols-outlined">check</span>
-                      </div>
-                      <div class="habit__text">
-                        <div class="habit__title">Picie wody (2L)</div>
-                        <div class="habit__sub">Zrealizowano</div>
-                      </div>
-                      <span class="material-symbols-outlined habit__icon habit__icon--teal">
-                        local_drink
-                      </span>
-                    </div>
-
-                    <div class="habit habit--done">
-                      <div class="check check--done check--solid" aria-hidden="true">
-                        <span class="material-symbols-outlined">check</span>
-                      </div>
-                      <div class="habit__text">
-                        <div class="habit__title">Nauka 30 min</div>
-                        <div class="habit__sub">Zrealizowano</div>
-                      </div>
-                      <span class="material-symbols-outlined habit__icon habit__icon--purple">
-                        menu_book
-                      </span>
-                    </div>
-
-                    <div class="habit">
-                      <div class="check" aria-hidden="true"></div>
-                      <div class="habit__text">
-                        <div class="habit__title habit__title--plain">Medytacja</div>
-                        <div class="habit__sub">10 minut</div>
-                      </div>
-                      <span class="material-symbols-outlined habit__icon habit__icon--pink">
-                        self_improvement
-                      </span>
-                    </div>
-
-                    <div class="habit">
-                      <div class="check" aria-hidden="true"></div>
-                      <div class="habit__text">
-                        <div class="habit__title habit__title--plain">Bieganie</div>
-                        <div class="habit__sub">3 km</div>
-                      </div>
-                      <span class="material-symbols-outlined habit__icon habit__icon--orange">
-                        directions_run
-                      </span>
-                    </div>
-
-                    <button class="habits__edit" type="button">Edytuj listę nawyków</button>
+                  <div class="habits" id="habits-container">
+                    <!-- Habits will be rendered by JavaScript -->
+                    <a href="/habits" class="habits__edit">Edytuj listę nawyków</a>
                   </div>
                 </section>
 
-                <!-- TIP -->
-                <section class="tip">
-                  <div class="tip__head">
-                    <span class="material-symbols-outlined">lightbulb</span>
-                    <span>Wskazówka dnia</span>
-                  </div>
-                  <p>
-                    Robienie przerw co 25 minut (Pomodoro) zwiększa Twoją produktywność o 40%!
-                  </p>
-                </section>
               </div>
             </div>
           </div>
         </div>
       </main>
     </div>
+    <script src="public/scripts/dashboard.js?v=4"></script>
   </body>
 </html>

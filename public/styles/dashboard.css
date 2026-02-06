@@ -617,16 +617,18 @@ body {
   border: 1px solid #eef0f2;
   border-radius: 24px;
   box-shadow: var(--shadow);
-  overflow: hidden;
+  overflow: visible;
+  padding-bottom: 4px;
 }
 
 .habit {
   display: grid;
-  grid-template-columns: 30px 1fr 28px;
+  grid-template-columns: 30px 1fr;
   gap: 12px;
   padding: 14px 16px;
   align-items: center;
   border-top: 1px solid #f1f3f5;
+  cursor: pointer;
 }
 
 .habit:first-child { border-top: 0; }
@@ -638,6 +640,7 @@ body {
   height: 22px;
   border-radius: 999px;
   border: 2px solid #e5e7eb;
+  transition: all 0.2s ease;
 }
 
 .check--done {
@@ -646,6 +649,11 @@ body {
   display: grid;
   place-items: center;
   color: var(--primary);
+}
+
+.habit:hover .check:not(.check--done) {
+  border-color: var(--primary);
+  background: rgba(71,153,235,0.05);
 }
 
 .check--done.check--solid {
